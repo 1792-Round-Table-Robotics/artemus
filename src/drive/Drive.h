@@ -13,6 +13,7 @@
 
 class DriveManager {
 private:
+	//Initializations
 	WPI_TalonSRX *rf;
 	WPI_TalonSRX *rr;
 	WPI_TalonSRX *lf;
@@ -27,4 +28,13 @@ private:
 public:
 	DriveManager();
 	void driveTrain();
+	//Control variables for driving
+	double driveVelX;
+	double driveVelY;
+	double driveVelRotation;
+	bool intakeIn;
+	bool intakeOut;
+	bool outtakeUp;
+	bool outtakeDown;
 };
+
