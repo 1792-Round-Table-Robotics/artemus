@@ -14,12 +14,13 @@
 #include <ctre/Phoenix.h>
 #include <Joystick.h>
 #include <Drive/DifferentialDrive.h>
-#include <Drive/Drive.h>
 #include <DriverStation.h>
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SendableChooser.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include "AHRS.h"
+#include <RobotDrive.h>
+#include <Subclasses/Drive.h>
 
 DriveManager::DriveManager() {
 	rf = new WPI_TalonSRX(1);
@@ -31,10 +32,7 @@ DriveManager::DriveManager() {
 	driveVelX = 0;
 	driveVelY = 0;
 	driveVelRotation = 0;
-	intakeIn = false;
-	intakeOut = false;
-	outtakeUp = false;
-	outtakeDown = false;
+	gyroAngle = 0;
 
 	try{
 		ahrs = new AHRS(SPI::Port::kMXP);
@@ -51,5 +49,32 @@ DriveManager::DriveManager() {
 }
 
 void DriveManager::driveTrain() {
+	if (stick->GetRawAxis(1) < 0.05 and stick->GetRawAxis(1) > -0.05) {
+		driveVelX = 0;
+		}
+		else {
+			driveVelX = stick->GetRawAxis(1);
+		}
 
+	if (stick->GetRawAxis(2) < 0.05 and stick->GetRawAxis(2) > -0.05) {
+			driveVelY = 0;
+		}
+		else{
+			driveVelY = stick->GetRawAxis(2);
+		}
+
+	if (stick->GetRawAxis(3) < 0.05 and stick->GetRawAxis(3) > -0.05) {
+			driveVelY = 0;
+		}
+		else{
+			driveVelY = stick->GetRawAxis(3);
+		}
+
+
+	//driveVelX = stick->GetRawAxis(1);
+	//driveVelY = stick->GetRawAxis(2);
+    //driveVelRotation = stick->GetRawAxis(3);
+	gyroAngle = ahrs->GetAngle();
+
+	m_robotDrive->DriveCartesian(driveVelX, driveVelY, driveVelRotation, gyroAngle);
 }

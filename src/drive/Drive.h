@@ -10,6 +10,7 @@
 #include <WPILib.h>
 #include <ctre/Phoenix.h>
 #include "AHRS.h"
+#include <RobotDrive.h>
 
 class DriveManager {
 private:
@@ -32,9 +33,6 @@ public:
 	double driveVelX;
 	double driveVelY;
 	double driveVelRotation;
-	bool intakeIn;
-	bool intakeOut;
-	bool outtakeUp;
-	bool outtakeDown;
+	double gyroAngle;
 };
 
