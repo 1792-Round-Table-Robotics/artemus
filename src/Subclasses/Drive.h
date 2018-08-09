@@ -34,5 +34,7 @@ public:
 	double driveVelY;
 	double driveVelRotation;
 	double gyroAngle;
+	bool flip;
+	bool toggle;
 };
 

@@ -23,16 +23,18 @@
 #include <Subclasses/Drive.h>
 
 DriveManager::DriveManager() {
-	rf = new WPI_TalonSRX(1);
-	rr = new WPI_TalonSRX(2);
-	lf = new WPI_TalonSRX(3);
-	lr = new WPI_TalonSRX(4);
+	rf = new WPI_TalonSRX(0);
+	rr = new WPI_TalonSRX(1);
+	lf = new WPI_TalonSRX(2);
+	lr = new WPI_TalonSRX(3);
 	this->stick = new Joystick{ 0 };
 	xbox = new XboxController { 1 };
 	driveVelX = 0;
 	driveVelY = 0;
 	driveVelRotation = 0;
 	gyroAngle = 0;
+	flip = false;
+	toggle = false;
 
 	try{
 		ahrs = new AHRS(SPI::Port::kMXP);
@@ -49,21 +51,21 @@ DriveManager::DriveManager() {
 }
 
 void DriveManager::driveTrain() {
-	if (stick->GetRawAxis(1) < 0.05 and stick->GetRawAxis(1) > -0.05) {
+	if (stick->GetRawAxis(0) < 0.05 and stick->GetRawAxis(1) > -0.05) {
 		driveVelX = 0;
 		}
 		else {
 			driveVelX = stick->GetRawAxis(1);
 		}
 
-	if (stick->GetRawAxis(2) < 0.05 and stick->GetRawAxis(2) > -0.05) {
+	if (stick->GetRawAxis(1) < 0.05 and stick->GetRawAxis(2) > -0.05) {
 			driveVelY = 0;
 		}
 		else{
 			driveVelY = stick->GetRawAxis(2);
 		}
 
-	if (stick->GetRawAxis(3) < 0.05 and stick->GetRawAxis(3) > -0.05) {
+	if (stick->GetRawAxis(2) < 0.05 and stick->GetRawAxis(3) > -0.05) {
 			driveVelY = 0;
 		}
 		else{
@@ -74,7 +76,29 @@ void DriveManager::driveTrain() {
 	//driveVelX = stick->GetRawAxis(1);
 	//driveVelY = stick->GetRawAxis(2);
     //driveVelRotation = stick->GetRawAxis(3);
-	gyroAngle = ahrs->GetAngle();
+
+	if (stick->GetRawButton(6)) {
+		ahrs->Reset();
+	}
+
+	if(stick->GetRawButton(5) && !toggle)
+		{
+			flip = !flip;
+			toggle = true;
+		}
+	else if(!stick->GetRawButton(5) && toggle)
+		{
+			toggle = false;
+		}
+		//Robot Centric
+	if(flip) {
+			gyroAngle = ahrs->GetAngle();
+			frc::SmartDashboard::PutNumber("toggle",0);
+		}
+	else if(!flip) {
+			gyroAngle = 0;
+			frc::SmartDashboard::PutNumber("toggle",1);
+		}
 
 	m_robotDrive->DriveCartesian(driveVelX, driveVelY, driveVelRotation, gyroAngle);
 }

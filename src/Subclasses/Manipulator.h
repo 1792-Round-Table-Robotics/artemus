@@ -11,9 +11,14 @@
 #define SRC_SUBCLASSES_MANIPULATOR_H_
 
 class ManipulatorManager {
+private:
+	Joystick *stick;
 
 public:
 	ManipulatorManager();
+	void manipulate();
+	WPI_TalonSRX *outtake;
+	Talon *intake;
 };
 
 
