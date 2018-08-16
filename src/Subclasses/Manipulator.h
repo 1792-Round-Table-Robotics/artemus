@@ -13,12 +13,18 @@
 class ManipulatorManager {
 private:
 	Joystick *stick;
+	XboxController *xbox;
+	WPI_TalonSRX *outtake;
+	Talon *intake;
+	Talon *climber;
+	Servo *gearServoLeft;
+	Servo *gearServoRight;
+	bool flip;
+	bool toggle;
 
 public:
 	ManipulatorManager();
 	void manipulate();
-	WPI_TalonSRX *outtake;
-	Talon *intake;
 };
 
 

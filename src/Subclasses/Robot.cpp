@@ -32,6 +32,7 @@ private:
 
 	void TeleopPeriodic() {
 		driveManager->driveTrain();
+		manipulatorManager->manipulate();
 	}
 
 	void TestPeriodic() {}

@@ -26,9 +26,7 @@ private:
 	AHRS *ahrs;
 
 	MecanumDrive *m_robotDrive;
-public:
-	DriveManager();
-	void driveTrain();
+
 	//Control variables for driving
 	double driveVelX;
 	double driveVelY;
@@ -36,5 +34,8 @@ public:
 	double gyroAngle;
 	bool flip;
 	bool toggle;
+public:
+	DriveManager();
+	void driveTrain();
 };
 
