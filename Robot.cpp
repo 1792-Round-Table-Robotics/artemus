@@ -29,6 +29,8 @@ private:
 	ManipulatorManager *manipulatorManager;
 	PixyManager *pixyManager;
 
+	frc::Joystick stick { 0 };
+
 	void RobotInit() {
 	}
 
@@ -37,6 +39,12 @@ private:
 	void TeleopPeriodic() {
 		driveManager->driveTrain();
 		manipulatorManager->manipulate();
+
+		this->pixyManager->pixyFunct();
+
+		if (stick.GetRawButton(2)) {
+			this->pixyManager->pixyDriveTakeover();
+		}
 	}
 
 	void TestPeriodic() {}

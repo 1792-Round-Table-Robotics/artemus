@@ -1,8 +1,9 @@
-/*
- * Pixy.cpp
- *
- *  Created on: Aug 17, 2018
- *      Author: RTR
+/* Pixy.cpp
+ * Created on: Aug 17, 2018
+ * Original Creator: Casey Jones
+ * Rio Firmware Version at Creation: 2018
+ * FRC Library Version at Creation: 2018
+ * Motor Controller Types in Use: TalonSRX
  */
 
 #include <iostream>
